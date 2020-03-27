@@ -1,0 +1,451 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+
+    <title>贴纸打印系统</title>
+    <!-- Bootstrap Styles-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- FontAwesome Styles-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet"/>
+    <!-- Morris Chart Styles-->
+    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet"/>
+    <!-- Custom Styles-->
+    <link href="assets/css/custom-styles.css" rel="stylesheet"/>
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+
+
+    <style type="text/css">
+        <!--
+        父级
+
+        -->
+        .fatherdiv {
+            background-color: #D8D8D8;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .xianshi a {
+            text-decoration: none;
+        }
+
+        .xianshi:hover {
+            background-color: #C0C0C0;
+        }
+
+        .xianshi {
+            background-color: #D8D8D8;
+        }
+
+    </style>
+
+
+    <script src="assets/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Js -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <!-- Morris Chart Js -->
+    <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="assets/js/easypiechart.js"></script>
+    <!-- Custom Js -->
+    <script src="assets/echarts/echarts.min.js"></script>
+
+    <script src="assets/js/myjs.js"></script>
+
+
+</head>
+
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand" href="index.html"><i class="fa fa-comments"></i> <strong>贴纸打印 </strong></span>
+        </div>
+
+        <!--<ul class="nav navbar-top-links navbar-right">
+
+            &lt;!&ndash; /.dropdown &ndash;&gt;
+
+            &lt;!&ndash; /.dropdown &ndash;&gt;
+        </ul>-->
+    </nav>
+
+
+    <!-- 侧方导航栏 -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li>
+                    <a class="active-menu" href="http://192.168.123.198:8082/index"><i class="fa fa-bar-chart-o"></i>贴纸打印</a>
+                </li>
+                <li>
+                    <a class="active-menu" href="http://192.168.123.198:8082/updateInfo"><i
+                            class="fa fa-bar-chart-o"></i>修改规格</a>
+                </li>
+            </ul>
+
+        </div>
+
+    </nav>
+    <!-- /. NAV SIDE
+
+
+
+
+
+
+
+
+
+
+
+      -->
+    <div id="page-wrapper">
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        <small>条码标签打印系统</small>
+                    </h1>
+
+                    <ol class="breadcrumb">
+                        <li><a href="http://192.168.123.198:8082/index">贴纸规格修改</a></li>
+                    </ol>
+
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                        </div>
+                        <div class="panel-body">
+                            <div class="father">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <input class="form-control input-lg" id="soushuo" placeholder="输入款号搜索数据"
+                                               type="text"/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label style="display: none;color: red;font-size:30px" id="textInfo"></label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div th:if="${session.ERPlist2!=null}"
+                                             th:each="erpSp2,Stater:${session.ERPlist2}">
+                                            <div class="xianshi">
+
+                                                <a th:href="@{http://192.168.123.198:8082/updateInfo(id=${erpSp2.id})}"
+                                                   th:text="${erpSp2.no}"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                        </div>
+                        <div class="panel-body">
+
+
+                            <table class="table table-bordered table-hover" id="table">
+                                <thead>
+
+                                <tr>
+
+                                    <th>存货编码</th>
+                                    <th>品牌</th>
+                                    <th>价格标签贴纸规格</th>
+                                    <th>胶片贴纸规格</th>
+                                    <th>小四片标签贴纸规格</th>
+                                    <th>内盒标签贴纸规格</th>
+                                    <th>其他贴纸</th>
+                                    <th>其他贴纸</th>
+                                    <th>产地</th>
+                                    <th>订单PO号</th>
+                                    <th>打印</th>
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:if="${session.alllist!=null}" th:each="erpsp2,terStat:${session.alllist}">
+                                    <th th:text="${erpsp2.no}"></th>
+                                    <td th:text="${erpsp2.brand}"></td>
+                                    <td th:text="${erpsp2.price}"></td>
+                                    <td th:text="${erpsp2.jiaopian}"></td>
+                                    <td th:text="${erpsp2.xiaosipian}"></td>
+                                    <td th:text="${erpsp2.neihe}"></td>
+                                    <td th:text="${erpsp2.guapai}"></td>
+                                    <td th:text="${erpsp2.maodai}"></td>
+                                    <td class="go" th:switch="${erpsp2.made}">
+                                        <div th:case="1">China</div>
+                                        <div th:case="2">TaiWan</div>
+                                        <div></div>
+                                    </td>
+
+                                    <td class="go1" th:text="${erpsp2.po}">
+
+                                    </td>
+
+                                    <td><a id="print" th:href="@{http://192.168.123.198:8082/erpSp(id=${erpsp2.id})}"
+                                           class="btn btn-primary">预览打印</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /. ROW  -->
+            <footer><p>Copyright &copy; 2019 Startvincci-MIS </p></footer>
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+
+
+<script>
+    $(function () {
+
+
+
+
+        //打开页面关闭侧面导航栏
+        $("#sideNav").addClass('closed');
+        $('.navbar-side').animate({left: '-260px'});
+        $('#page-wrapper').animate({'margin-left': '0px'});
+
+        //悬浮事件
+        $(".go").hover(function () {
+            //当鼠标悬浮时
+            $(this).css("background", "#1cc09f");
+            //当鼠标离开时
+        }, function () {
+            $(".go").css("background", "#f2dede");
+        });
+
+
+        $(".go1").hover(function () {
+            //当鼠标悬浮时
+            $(this).css("background", "#1cc09f");
+            //当鼠标离开时
+        }, function () {
+            $(".go1").css("background", "#f2dede");
+        });
+
+
+        //修改生产地址
+        $(".go").click(function () {
+            //获取id
+            var i = $(this)
+            var Str = $(this).children("div").html();
+            var No = $(this).parent().children("th").text();
+            console.log("进入修改生产地址!" + "Str:" + Str + "----No:" + No);
+            $.ajax({
+                url: "http://192.168.123.198:8082/updateMfrs",
+                data: {"Str": Str, "No": No},
+                dataType: "text",
+                success: function (data) {
+                    if (data == "error") {
+                        console.log("..缺少数据");
+                        $("#textInfo").css('display', 'inline-block');
+                        $("#textInfo").text("缺少bom名称或者产地记录，修改失败!");
+                        $("#textInfo").css({"font-color": "#FF6A6A"});
+                    } else {
+                        console.log("ok！--" + data);
+                        $("#textInfo").css('display', 'inline-block');
+                        $("#textInfo").text("修改生产地址成功!");
+                        $("#textInfo").css({"font-color": "#FF6A6A"});
+                        i.children(":first").text(data);
+                    }
+
+
+                },
+                error: function (er) {
+                    console.log(er);
+                    $("#textInfo").css('display', 'inline-block');
+                    $("#textInfo").text("修改生产地址失败:请联系mis");
+                    $("#textInfo").css({"font-color": "#FF6A6A"});
+                }
+            })//ajax
+
+        })
+
+        $("#print").click(function () {
+            $("#textInfo").css('display', 'inline-block');
+            $("#textInfo").text("正在生成条码..请稍等");
+            $("#textInfo").css({"font-color": "#FF6A6A"});
+        })
+
+        //修改童带的Po号
+
+
+        //搜索栏
+        $("#soushuo").keyup(function () {
+            var spNo = $("#soushuo").val();
+            //正则表达式判断 btNo的内容   判断为4位数以上
+            if (/^.{5,20}$/.test(spNo)) {
+                var bool = /[\u4E00-\u9FA5]/g.test(spNo);
+                //正则表达式判断 btNo的内容   判断为非汉字
+                if (!bool) {
+
+                    $.ajax({
+                        url: "http://192.168.123.198:8082/findErpSPInfo2",
+                        data: {"spNo": spNo},
+                        dataType: "text",
+                        success: function (data) {
+                            if (data == "OK") {
+                                $("#textInfo").css('display', 'inline-block');
+                                $("#textInfo").text("正在查询请稍等...")
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1500);
+                                $("#soushuo").val(spNo);
+
+                            } else {
+                                $("#textInfo").css('display', 'inline-block');
+                                $("#textInfo").text("数据库没有此单号的相关数据,请联系开发添加规格!");
+                                $("#textInfo").css({"font-color": "#FF6A6A"});
+                            }
+
+                        },
+                        error: function (er) {
+                            console.log(er);
+                            $("#textInfo").css('display', 'inline-block');
+                            $("#textInfo").val("查询失败:请联系mis");
+                            $("#textInfo").css({"font-color": "#FF6A6A"});
+                        }
+                    })//ajax
+                } else {
+                    $("#textInfo").css('display', 'inline-block');
+                    $("#textInfo").text("请输入数字和字母！禁止输入中文")
+                }
+            } else {
+                $("#textInfo").css('display', 'inline-block');
+                $("#textInfo").text("请输入5位以上数字")
+
+            }
+
+
+        });
+
+
+        //修改po号
+        $(".go1").click(function () {
+
+            var j = $(this);
+            var No = j.parent().children("th").text();
+
+
+            var inputElement = document.createElement("input");
+            inputElement.value = this.innerHTML;
+            this.parentNode.replaceChild(inputElement, this);
+            // 当inputElement失去焦点时触发下面函数，使得input变成div
+
+
+            inputElement.onblur = function () {
+                this.innerHTML = inputElement.value;
+                var linkQuee = inputElement.value;
+                inputElement.parentNode.replaceChild(this, inputElement);
+                var bool = /[\u4E00-\u9FA5]/g.test(linkQuee);
+                //正则判断
+                if (!bool) {
+                    //发送请求 改变po的值
+
+                    console.log(linkQuee + "--" + No)
+                    $.ajax({
+                        url: "http://192.168.123.198:8082/updatePo2",
+                        data: {"linkQuee": linkQuee, "No": No},
+                        dataType: "text",
+                        success: function (data) {
+                            $("#textInfo").css('display', 'inline-block');
+                            $("#textInfo").text("修改成功!");
+                            $("#textInfo").css({"font-color": "#FF6A6A"});
+                            location.reload();
+                        },
+                        error: function (er) {
+                            console.log(er);
+                            $("#textInfo").css('display', 'inline-block');
+                            $("#textInfo").text("修改失败:请联系mis");
+                            $("#textInfo").css({"font-color": "#FF6A6A"});
+                        }
+                    })//ajax
+
+                } else {
+                    alert("您输入的Po号不能包含汉字！")
+                }
+
+
+            }//失去jiao
+
+
+        })
+
+
+        //添加新的条码规格
+        $("#submit").click(function () {
+            var erpsp2 = $("#erpsp2").serialize();
+            alert(erpsp2);
+            if (erpsp2 == null) {
+                $("#textInfo").css('display', 'inline-block');
+                $("#textInfo").text("添加规格失败，请至少设置一种规格")
+            } else {
+                $.ajax({
+                    url: "http://192.168.123.198:8082/insert",
+                    data: erpsp2,
+                    dataType: "text",
+                    success: function (data) {
+                        console.log(data);
+                        $("#textInfo").css('display', 'inline-block');
+                        $("#textInfo").text(data)
+                    },
+                    error: function (er) {
+                        console.log(er);
+                        $("#textInfo").css('display', 'inline-block');
+                        $("#textInfo").text("操作失败:请联系mis");
+                        $("#textInfo").css({"font-color": "#FF6A6A"});
+                    }
+                })//ajax
+            }
+
+        })
+
+
+    })
+</script>
+
+</body>
+
+</html>

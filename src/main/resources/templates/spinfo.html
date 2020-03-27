@@ -1,0 +1,797 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    
+    <title>贴纸打印系统</title>
+    <!-- Bootstrap Styles-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- Morris Chart Styles-->
+    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="assets/css/custom-styles.css" rel="stylesheet" />
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+      <style type="text/css">
+     <!-- 父级 -->
+       .fatherdiv{
+         background-color:#D8D8D8;
+         font-weight:bold;
+         font-size: 15px;
+      }
+      .xianshi a{
+       text-decoration: none;
+      }
+      .xianshi:hover {
+	  background-color: #C0C0C0;
+    }
+    .xianshi{
+     background-color:#D8D8D8;
+    }
+     </style>
+
+
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand" href="index.html"><i class="fa fa-comments"></i> <strong>贴纸打印 </strong></span>
+            </div>
+
+            <ul class="nav navbar-top-links navbar-right">
+              
+                <!-- /.dropdown -->
+               
+                <!-- /.dropdown -->
+            </ul>
+        </nav>
+     
+     
+     <!-- 侧方导航栏 -->
+        <nav class="navbar-default navbar-side" role="navigation">
+		<div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <a class="active-menu" href="http://192.168.123.198:8082/index"><i class="fa fa-bar-chart-o"></i>贴纸打印</a>
+                    </li>
+                     <li>
+                        <a class="active-menu" href="http://192.168.123.198:8082/updateInfo"><i class="fa fa-bar-chart-o"></i>修改规格</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            <small>条码标签打印系统</small>
+                        </h1>
+						<ol class="breadcrumb"> 
+ 									  <li><a href="http://192.168.123.198:8082/updateInfo">贴纸打印</a></li>
+						</ol> 
+                    </div>
+                </div>
+				
+				
+				
+			
+				<div class="row">
+			        <div class="col-md-12">
+					    <div class="panel panel-default">
+						    <div class="panel-heading">
+							
+						    </div>
+						<div class="panel-body">
+							       <div class="table-responsive">
+                                 <div class="col-sm-12 ">
+                                              <div  class="father">
+                                                   <div class="row">
+                                                      <div class="col-md-5">
+                                                         <input class="form-control input-lg"  id="soushuo"  placeholder="输入款号搜索数据" type="text" />
+                                                      </div>
+                                                      
+                                                       <div class="col-md-2" >
+                                                        <label   style="display: none;color:red;font-size:25px" id="textInfo" ></label>
+                                                       </div>
+                                                       
+                                                            <div class="col-md-5" th:if="${session.mes!=null}" th:text="${session.mes}" style="font-size:25px;color:red"></div>
+                                                            
+                                                      </div>
+                                                    
+                                                       <div class="row">
+                                        	              <div class="col-md-5">
+                                        	                   <div th:if="${session.ERPlist!=null}" th:each="erpSp,Stater:${session.ERPlist}">   
+                                                               <div  class="xianshi" >
+                                                                  <input hidden="hidden" th:value="${erpSp.sp_id}" />
+                                                                  <a th:href="@{http://192.168.123.198:8082/erpSp(id=${erpSp.sp_id})}"  th:text="${erpSp.sp_No}+'---'+${erpSp.sp_Name}" ></a>
+                                                               </div>
+                                                              </div>
+                                        	              </div>
+                                        	          </div> 
+                                        	<div class="row" style="font-size:25px;color:red">
+                                        	 <div class="col-md-6"  th:if="${session.mes2!=null}" th:text="${session.mes2}"></div>
+                                        	 
+                                        	</div>
+              
+                                    </div>
+               </div>
+              
+                <table class="table" >
+                 <thead>
+                      <tr>
+                 	 	<th>品名</th>
+                  		<th>存货编码</th>
+                 		 <th>品牌名称</th>
+                 		 <th class="nb">upc号码</th>
+                 		 <th>客户</th>
+                 		 <th class="nb">价格</th>
+                 		 <th>款式类别</th>
+                 		 
+               	 </tr>
+                 </thead>
+                  <tbody>
+              		 <tr th:if="${session.erpSps!=null}" class="table-success">
+              		 <th  th:text="${session.erpSps.Sp_Name}"></th>
+                  <th    th:text="${session.erpSps.Sp_No}" id="erpspNo"></th>
+                  <th  th:text="${session.erpSps.erpspPlusmyField05}"></th>
+                  <th  th:text="${session.erpSps.erpspPlusmyField03}"></th>
+                  <th   th:text="${session.erpSps.erpspPlusmyField12}"></th>
+                  <th   th:text="${session.erpSps.erpspPlusmyField06}"></th>
+                  <th  th:text="${session.erpSps.kk}" style="background-color:yellow;color:red"> </th>
+              		 
+              		 </tr>
+               </tbody>
+               </table>
+            
+             <div style="width:100%;height:100px"></div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+            <table class="table table-bordered" >
+              <thead>
+               
+                <tr>
+                  <th>录入时间</th>
+                  <th>出货日期</th>
+                  <th>Po号</th>
+                  <th>生产地址</th>
+                  <th>价格标签贴纸规格</th>
+                  <th>胶片贴纸规格</th>
+                  <th>小四片标签贴纸规格</th>
+                  <th>内盒标签贴纸规格</th>
+                  <th>其他贴纸1</th>
+                  <th>其他贴纸2</th>
+                  <th>LOGO图片</th>
+                  <th>编辑此款式使用贴纸类型</th>
+                  
+                 
+                 
+                </tr>
+              </thead>
+              <tbody>
+               <tr th:if="${session.erpSps!=null}">
+               
+                  <td th:switch="${session.erpsp2!=null}" >
+                       <div th:case="true">
+                          <div th:switch="${session.erpsp2.datetime!=null}">
+                               <div th:case="true" th:text="${#dates.format(session.erpsp2.datetime,'yyyy-MM-dd')}"></div>
+                               <div th:case="false" >2019-12-30 </div>
+                           </div>
+                        </div>
+                    <div  th:case="false">未录入规格</div>
+                  </td>
+               
+               
+                 <td th:switch="${session.erpsp2!=null}" id="upDate">
+                     <div th:case="true">
+                           <div th:switch="${session.erpsp2.sellDate!=null}">
+                             <div th:case="true" th:text="${session.erpsp2.sellDate}" id="uptext"></div>
+                             <div th:case="false"><input type="date" placeholder="童带请选择出货时间"  id="sellDate"></div>
+                           </div>
+                    </div>
+                    <div th:case="false">请联系研发谭晓东录入规格！</div>
+                 </td>
+                 
+                   <td  class="go1" th:if="${session.erpsp2!=null}" th:text="${session.erpsp2.po}">
+                   
+                   <td class="go"  th:if="${session.erpsp2!=null}" th:switch="${session.erpsp2.made}">
+                      <div th:case="1">China</div>
+                      <div th:case="2">TaiWan</div>
+                   </td>
+                  
+                  
+                   <th th:switch="${session.erpsp2!=null}">
+                   <div th:case="true" th:text="${session.erpsp2.price}" style="font-size:16px;color:red"> </div>
+                    <div th:case="false" id="price1" style="color:red">此贴标缺少数据</div>
+                   </th>
+                   
+              
+                   
+                   <th th:switch="${session.erpsp2!=null}" style="font-size:16px;color:red">
+                   <div th:case="true" th:text="${session.erpsp2.jiaopian}"></div>
+                   <div th:case="false" id="price2" style="color:red">此贴标缺少数据</div>
+                   </th>
+                   
+                   <th th:switch="${session.erpsp2!=null}" style="font-size:16px;color:red">
+                     <div th:case="true" th:text="${session.erpsp2.xiaosipian}"></div>
+                     <div th:case="false" id="price3" style="color:red">此贴标缺少数据</div>
+                   </th>
+                   
+                   <th th:switch="${session.erpsp2!=null}" style="font-size:16px;color:red">
+                   <div th:case="true" th:text="${session.erpsp2.neihe}"></div>
+                     <div th:case="false" id="price4" style="color:red">此贴标缺少数据</div>
+                   </th>
+                   
+                    <th th:switch="${session.erpsp2!=null}" style="font-size:16px;color:red">
+                      <div th:case="true" th:text="${session.erpsp2.maodai}"></div>
+                      <div th:case="false" id="price4" style="color:red">此贴标缺少数据</div>
+                   </th>
+                   
+                    <th th:switch="${session.erpsp2!=null}" style="font-size:16px;color:red">
+                      <div th:case="true" th:text="${session.erpsp2.guapai}"></div>
+                     <div th:case="false" id="price4" style="color:red">此贴标缺少数据</div>
+                   </th>
+                   
+                   <th  rowspan="2"  th:switch="${session.img!=null}" style="font-size:16px;color:red">
+                   <div th:case="true"><img th:src="${session.img}" style="width:200px;height:140px"></div>
+                   <div th:case="false">缺少数据</div>  
+                   </th >
+                   
+                <th rowspan="2"  th:switch="${session.missinfo==null}">
+                      <div th:case="true">
+                        <!--  --> <button  class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal">编辑此 款式规格</button>
+                       </div>
+                       <div th:case="false">此皮带款品牌拼写有误!找不到对应的LOGO!</div>
+                 </th>
+                             
+              </tr>
+       
+              <tr th:if="${session.erpsp2!=null}">
+                    <th></th>
+                     <th></th>
+                    <th></th>
+                    <th></th>
+                  <th  th:switch="${session.erpsp2.price!='\'}">
+                   <div th:case="true">
+                     <div><a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.price})}" class="btn btn-primary">打印预览</a></div>
+                   </div>
+                   <div  th:case="false"></div>
+                   </th>
+                   
+                     <th  th:switch="${session.erpsp2.jiaopian!='\'}">
+                   <div th:case="true">
+                     <div><a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.jiaopian})}" class="btn btn-primary">打印预览</a></div>
+                   </div>
+                   <div  th:case="false"></div>
+                   </th>
+                   
+                      <th  th:switch="${session.erpsp2.xiaosipian!='\'}">
+                   <div th:case="true">
+                     <div><a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.xiaosipian})}" class="btn btn-primary">打印预览</a></div>
+                   </div>
+                   <div  th:case="false"></div>
+                   </th>
+                   
+                     <th  th:switch="${session.erpsp2.neihe!='\'}">
+                   <div th:case="true">
+                     <div><a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.neihe})}" class="btn btn-primary">打印预览</a></div>
+                   </div>
+                   <div  th:case="false"></div>
+                   </th>
+                   
+                   <th  th:switch="${session.erpsp2.maodai!='\'}">
+                     <div th:case="true">
+                       <div><a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.maodai})}" class="btn btn-primary">打印预览</a></div>
+                      </div>
+                      <div  th:case="false"></div>
+                   </th>
+                   
+                     <th  th:switch="${session.erpsp2.guapai!='\'}">
+                     <div th:case="true">
+                       <div><a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.guapai})}" class="btn btn-primary">打印预览</a></div>
+                      </div>
+                      <div  th:case="false"></div>
+                   </th>
+                   
+              </tr>
+              </tbody>
+            </table>
+          </div>
+						</div>
+					</div>  
+				</div>			
+		   </div> 
+
+	   
+			
+				
+				
+                <!-- /. ROW  -->
+				<footer><p>Copyright &copy; 2019 Startvincci-MIS </p></footer>
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    
+    
+    
+    
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+               
+                <h4 class="modal-title" id="myModalLabel" ></h4>
+            </div>
+            <div class="modal-body">
+                                                                     <form role="form" id="erpsp2">
+                                                              <div class="form-group input-group" >
+                                                      					<span class="input-group-addon" >价格标签:</span>
+                                                         					 <select name="price" aria-controls="dataTable" class="form-control" >
+           												 						<option  value="\"  selected="selected">请选择贴纸规格</option>
+           												 						<option value="3.0X1.2CM标签(无价格,一般用于内盒贴纸)">3.0X1.2CM标签(无价格,一般用于内盒贴纸)</option>
+           												 						<option value="3.0X2CM价格标签(生产地址在底部,LOGO较高)">3.0X2CM价格标签(生产地址在底部,LOGO较高)</option>
+            																	<option value="3.0X2CM价格标签(生产地址在底部,LOGO较矮)">3.0X2CM价格标签(生产地址在底部,LOGO较矮)</option>
+           							 											<option value="3.0X2CM价格标签(生产地址在侧面,LOGO较高)">3.0X2CM价格标签(生产地址在侧面,LOGO较高)</option>
+            																	<option value="3.0X2CM贴标(无价格,一般用于小四片，胶带贴纸)">3.0X2CM贴标(无价格，一般用于小四片，胶带贴纸)</option>
+            																	<option value="3.5X2.5CM价格贴标(背带常用)">3.5X2.5CM价格贴标(背带常用)</option>
+           													   				    <option value="3.8X2CM价格标签(有LOGO,有价格,LOGO较矮)">3.8X2CM价格标签(有LOGO，有价格，LOGO较矮)</option>
+           													   				    <option value="3.8X2CM价格标签(有LOGO,有价格,LOGO较高)">3.8X2CM价格标签(有LOGO，有价格，LOGO较高)</option>
+           													   				     <option value="3.8X2CM价格标签(无LOGO有价格,手表带,皮夹头卡贴纸)">3.8X2CM价格标签(无LOGO有价格，手表带，皮夹头卡贴纸)</option>
+           													   				    <option value="4X2CM价格标(带孔，有价格,圣经套,皮夹价格标)">4X2CM价格标(带孔，有价格,圣经套，皮夹价格标)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,有价格)">4X2.5CM挂牌吊卡(带孔，有LOGO,有价格)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,价格在左侧，帽带)">4X2.5CM挂牌吊卡(带孔，有LOGO,价格在左侧，帽带)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,无价格，帽带)">4X2.5CM挂牌吊卡(带孔，有LOGO,无价格，帽带)</option>
+                             
+           													   				    
+           		      						             					</select> 
+                                                    			</div>
+                                                  				<div class="form-group input-group" >
+                                                      					<span class="input-group-addon" >胶片贴纸(皮带):</span>
+                                                         					 
+                                                         					 <select name="jiaopian" aria-controls="dataTable" class="form-control"  >
+           												 						<option   value="\" selected="selected">请选择贴纸规格</option>
+           													   				    <option value="5.5X1.5胶片标签(LOGO较高,LOGO较窄)">5.5X1.5胶片标签(LOGO较高,logo较窄)</option>
+           													   				    <option value="5.5X1.5胶片标签(LOGO较矮，LOGO较宽)">5.5X1.5胶片标签(LOGO较矮，LOGO较宽)</option>
+           													   				    <option value="9.5X2.0童带胶片标签(LOGO较矮，有PO号)">9.5X2.0童带胶片标签(LOGO较矮，有PO号)</option>
+           													   				    <option value="9.5X2.0童带胶片标签(LOGO较高，有PO号)">9.5X2.0童带胶片标签(LOGO较高，有PO号)</option>
+           		      						             					    <option value="6.5X1.7胶片标签(带有PO号，较高LOGO)">6.5X1.7胶片标签(带有PO号，较高LOGO)</option>
+           													   				    <option value="6.5X1.7胶片标签(带有PO号，较矮LOGO)">6.5X1.7胶片标签(带有PO号，较矮LOGO)</option>
+           		      						             					</select> 
+                                                    			</div>
+                                                    			<div class="form-group input-group" >
+                                                      					<span class="input-group-addon" >小四片贴纸:</span> 
+                                                         					 <select name="xiaosipian" aria-controls="dataTable" class="form-control"  >
+           												 						<option  value="\"  selected="selected">请选择贴纸规格</option>
+           												 						<option value="3.0X1.2CM标签(无价格,一般用于内盒贴纸)">3.0X1.2CM标签(无价格,一般用于内盒贴纸)</option>
+           												 						<option value="3.0X2CM价格标签(生产地址在底部,LOGO较高)">3.0X2CM价格标签(生产地址在底部,LOGO较高)</option>
+            																	<option value="3.0X2CM价格标签(生产地址在底部,LOGO较矮)">3.0X2CM价格标签(生产地址在底部,LOGO较矮)</option>
+           							 											<option value="3.0X2CM价格标签(生产地址在侧面,LOGO较高)">3.0X2CM价格标签(生产地址在侧面,LOGO较高)</option>
+            																	<option value="3.0X2CM贴标(无价格,一般用于小四片，胶带贴纸)">3.0X2CM贴标(无价格，一般用于小四片，胶带贴纸)</option>
+            																	<option value="3.5X2.5CM价格贴标(背带常用)">3.5X2.5CM价格贴标(背带常用)</option>
+           													   				    <option value="3.8X2CM价格标签(有LOGO,有价格,LOGO较矮)">3.8X2CM价格标签(有LOGO，有价格，LOGO较矮)</option>
+           													   				    <option value="3.8X2CM价格标签(有LOGO,有价格,LOGO较高)">3.8X2CM价格标签(有LOGO，有价格，LOGO较高)</option>
+           													   				     <option value="3.8X2CM价格标签(无LOGO有价格,手表带,皮夹头卡贴纸)">3.8X2CM价格标签(无LOGO有价格，手表带，皮夹头卡贴纸)</option>
+           													   				    <option value="4X2CM价格标(带孔，有价格,圣经套,皮夹价格标)">4X2CM价格标(带孔，有价格,圣经套，皮夹价格标)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,有价格)">4X2.5CM挂牌吊卡(带孔，有LOGO,有价格)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,价格在左侧，帽带)">4X2.5CM挂牌吊卡(带孔，有LOGO,价格在左侧，帽带)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,无价格，帽带)">4X2.5CM挂牌吊卡(带孔，有LOGO,无价格，帽带)</option>
+           													   				 
+           		      						             					</select> 
+                                                    			</div>
+                                                    			<div class="form-group input-group" >
+                                                      					<span class="input-group-addon" >内盒贴纸:</span>			 
+                                                         					 <select name="neihe" aria-controls="dataTable" class="form-control"  >
+           												 					<option  value="\"  selected="selected">请选择贴纸规格</option>
+           												 						<option value="3.0X1.2CM标签(无价格,一般用于内盒贴纸)">3.0X1.2CM标签(无价格,一般用于内盒贴纸)</option>
+           												 						<option value="3.0X2CM价格标签(生产地址在底部,LOGO较高)">3.0X2CM价格标签(生产地址在底部,LOGO较高)</option>
+            																	<option value="3.0X2CM价格标签(生产地址在底部,LOGO较矮)">3.0X2CM价格标签(生产地址在底部,LOGO较矮)</option>
+           							 											<option value="3.0X2CM价格标签(生产地址在侧面,LOGO较高)">3.0X2CM价格标签(生产地址在侧面,LOGO较高)</option>
+            																	<option value="3.0X2CM贴标(无价格,一般用于小四片，胶带贴纸)">3.0X2CM贴标(无价格，一般用于小四片，胶带贴纸)</option>
+            																	<option value="3.5X2.5CM价格贴标(背带常用)">3.5X2.5CM价格贴标(背带常用)</option>
+           													   				    <option value="3.8X2CM价格标签(有LOGO,有价格,LOGO较矮)">3.8X2CM价格标签(有LOGO，有价格，LOGO较矮)</option>
+           													   				    <option value="3.8X2CM价格标签(有LOGO,有价格,LOGO较高)">3.8X2CM价格标签(有LOGO，有价格，LOGO较高)</option>
+           													   				     <option value="3.8X2CM价格标签(无LOGO有价格,手表带,皮夹头卡贴纸)">3.8X2CM价格标签(无LOGO有价格，手表带，皮夹头卡贴纸)</option>
+           													   				    <option value="4X2CM价格标(带孔，有价格,圣经套,皮夹价格标)">4X2CM价格标(带孔，有价格,圣经套，皮夹价格标)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,有价格)">4X2.5CM挂牌吊卡(带孔，有LOGO,有价格)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,价格在左侧，帽带)">4X2.5CM挂牌吊卡(带孔，有LOGO,价格在左侧，帽带)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,无价格，帽带)">4X2.5CM挂牌吊卡(带孔，有LOGO,无价格，帽带)</option>
+
+           		      						             					</select> 
+                                                    			        </div>
+                                                    			        
+                                                    			        <div class="form-group input-group" >
+                                                      					<span class="input-group-addon" >其他贴纸1:</span>			 
+                                                         					 <select name="guapai" aria-controls="dataTable" class="form-control"  >
+           												 					<option value="\" selected="selected">请选择贴纸规格</option>
+           												 						<option  value="\"  selected="selected">请选择贴纸规格</option>
+           												 						<option value="3.0X1.2CM标签(无价格,一般用于内盒贴纸)">3.0X1.2CM标签(无价格,一般用于内盒贴纸)</option>
+           												 						<option value="3.0X2CM价格标签(生产地址在底部,LOGO较高)">3.0X2CM价格标签(生产地址在底部,LOGO较高)</option>
+            																	<option value="3.0X2CM价格标签(生产地址在底部,LOGO较矮)">3.0X2CM价格标签(生产地址在底部,LOGO较矮)</option>
+           							 											<option value="3.0X2CM价格标签(生产地址在侧面,LOGO较高)">3.0X2CM价格标签(生产地址在侧面,LOGO较高)</option>
+            																	<option value="3.0X2CM贴标(无价格,一般用于小四片，胶带贴纸)">3.0X2CM贴标(无价格，一般用于小四片，胶带贴纸)</option>
+            																	<option value="3.5X2.5CM价格贴标(背带常用)">3.5X2.5CM价格贴标(背带常用)</option>
+           													   				    <option value="3.8X2CM价格标签(有LOGO,有价格,LOGO较矮)">3.8X2CM价格标签(有LOGO，有价格，LOGO较矮)</option>
+           													   				    <option value="3.8X2CM价格标签(有LOGO,有价格,LOGO较高)">3.8X2CM价格标签(有LOGO，有价格，LOGO较高)</option>
+           													   				     <option value="3.8X2CM价格标签(无LOGO有价格,手表带,皮夹头卡贴纸)">3.8X2CM价格标签(无LOGO有价格，手表带，皮夹头卡贴纸)</option>
+           													   				    <option value="4X2CM价格标(带孔，有价格,圣经套,皮夹价格标)">4X2CM价格标(带孔，有价格,圣经套，皮夹价格标)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,有价格)">4X2.5CM挂牌吊卡(带孔，有LOGO,有价格)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,价格在左侧，帽带)">4X2.5CM挂牌吊卡(带孔，有LOGO,价格在左侧，帽带)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,无价格，帽带)">4X2.5CM挂牌吊卡(带孔，有LOGO,无价格，帽带)</option>
+                                                                                <option value="5.5X1.5胶片标签(LOGO较高,LOGO较窄)">5.5X1.5胶片标签(LOGO较高,logo较窄)</option>
+           													   				    <option value="5.5X1.5胶片标签(LOGO较矮，LOGO较宽)">5.5X1.5胶片标签(LOGO较矮，LOGO较宽)</option>
+           													   				    <option value="9.5X2.0童带胶片标签(LOGO较矮，有PO号)">9.5X2.0童带胶片标签(LOGO较矮，有PO号)</option>
+           													   				    <option value="9.5X2.0童带胶片标签(LOGO较高，有PO号)">9.5X2.0童带胶片标签(LOGO较高，有PO号)</option>
+           		      						             					    <option value="6.5X1.7胶片标签(带有PO号，较高LOGO)">6.5X1.7胶片标签(带有PO号，较高LOGO)</option>
+           													   				    <option value="6.5X1.7胶片标签(带有PO号，较矮LOGO)">6.5X1.7胶片标签(带有PO号，较矮LOGO)</option>
+           													   				 
+           		      						             					</select> 
+                                                    			        </div>
+                                                                       
+                                                                           <div class="form-group input-group" >
+                                                      					<span class="input-group-addon" >其他贴纸2:</span>			 
+                                                         					 <select name="maodai" aria-controls="dataTable" class="form-control"  >
+           												 					<option value="\" selected="selected">请选择贴纸规格</option>
+           												 						<option  value="\"  selected="selected">请选择贴纸规格</option>
+           												 						<option value="3.0X1.2CM标签(无价格,一般用于内盒贴纸)">3.0X1.2CM标签(无价格,一般用于内盒贴纸)</option>
+           												 						<option value="3.0X2CM价格标签(生产地址在底部,LOGO较高)">3.0X2CM价格标签(生产地址在底部,LOGO较高)</option>
+            																	<option value="3.0X2CM价格标签(生产地址在底部,LOGO较矮)">3.0X2CM价格标签(生产地址在底部,LOGO较矮)</option>
+           							 											<option value="3.0X2CM价格标签(生产地址在侧面,LOGO较高)">3.0X2CM价格标签(生产地址在侧面,LOGO较高)</option>
+            																	<option value="3.0X2CM贴标(无价格,一般用于小四片，胶带贴纸)">3.0X2CM贴标(无价格，一般用于小四片，胶带贴纸)</option>
+            																	<option value="3.5X2.5CM价格贴标(背带常用)">3.5X2.5CM价格贴标(背带常用)</option>
+           													   				    <option value="3.8X2CM价格标签(有LOGO,有价格,LOGO较矮)">3.8X2CM价格标签(有LOGO，有价格，LOGO较矮)</option>
+           													   				    <option value="3.8X2CM价格标签(有LOGO,有价格,LOGO较高)">3.8X2CM价格标签(有LOGO，有价格，LOGO较高)</option>
+           													   				     <option value="3.8X2CM价格标签(无LOGO有价格,手表带,皮夹头卡贴纸)">3.8X2CM价格标签(无LOGO有价格，手表带，皮夹头卡贴纸)</option>
+           													   				    <option value="4X2CM价格标(带孔，有价格,圣经套,皮夹价格标)">4X2CM价格标(带孔，有价格,圣经套，皮夹价格标)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,有价格)">4X2.5CM挂牌吊卡(带孔，有LOGO,有价格)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,价格在左侧，帽带)">4X2.5CM挂牌吊卡(带孔，有LOGO,价格在左侧，帽带)</option>
+           													   				    <option value="4X2.5CM挂牌吊卡(带孔，有LOGO,无价格，帽带)">4X2.5CM挂牌吊卡(带孔，有LOGO,无价格，帽带)</option>
+                                                                                <option value="5.5X1.5胶片标签(LOGO较高,LOGO较窄)">5.5X1.5胶片标签(LOGO较高,logo较窄)</option>
+           													   				    <option value="5.5X1.5胶片标签(LOGO较矮，LOGO较宽)">5.5X1.5胶片标签(LOGO较矮，LOGO较宽)</option>
+           													   				    <option value="9.5X2.0童带胶片标签(LOGO较矮，有PO号)">9.5X2.0童带胶片标签(LOGO较矮，有PO号)</option>
+           													   				    <option value="9.5X2.0童带胶片标签(LOGO较高，有PO号)">9.5X2.0童带胶片标签(LOGO较高，有PO号)</option>
+           		      						             					    <option value="6.5X1.7胶片标签(带有PO号，较高LOGO)">6.5X1.7胶片标签(带有PO号，较高LOGO)</option>
+           													   				    <option value="6.5X1.7胶片标签(带有PO号，较矮LOGO)">6.5X1.7胶片标签(带有PO号，较矮LOGO)</option>
+           													   				 
+           		      						             					</select> 
+                                                    			        </div>
+                                                    			        
+                                                    			         <div class="form-group input-group" >
+                                                    			           <label   style="display: none;color: red" id="textInfo2" ></label>
+                                                    			         </div>
+                                                    			     </form>
+                                                           </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="submit">提交数据</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+    
+    
+    
+    
+          <script src="assets/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="assets/js/bootstrap.min.js"></script>
+	 
+    <!-- Metis Menu Js -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <!-- Morris Chart Js -->
+    <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
+	<script src="assets/js/easypiechart.js"></script>
+    <!-- Custom Js -->
+    <script src="assets/echarts/echarts.min.js"></script>
+    
+    	<script src="assets/js/myjs.js"></script>
+       
+     
+     <script>
+     $(function() {
+    	 
+    	 
+    	 $("#sideNav").addClass('closed');
+			$('.navbar-side').animate({left: '-260px'});
+			$('#page-wrapper').animate({'margin-left' : '0px'}); 
+    	 
+    	 
+    	 
+    	 
+    	 $("#soushuo").keyup(function () {
+ 	    	var spNo=$("#soushuo").val();
+ 	      //正则表达式判断 btNo的内容   判断为5位数以上
+ 	    	 if(/^.{5,20}$/.test(spNo)){
+ 	    		  var bool=/[\u4E00-\u9FA5]/g.test(spNo);
+ 	    		  //正则表达式判断 btNo的内容   判断为非汉字
+ 	    	         if(!bool){
+ 	    	    
+ 	    	        	 $.ajax({
+ 	    	   	             	url:"http://192.168.123.198:8082/findErpSPInfo",
+ 	    	   	             	data:{"spNo":spNo},
+ 	    	   	             	dataType:"text",
+ 	    	   	             	success:function(data){
+ 	    	   	             		if(data=="OK"){
+ 	    	   	             		 $("#textInfo").css('display','inline-block');
+     	    	   	             	 $("#textInfo").val("正在查询请稍等...")
+     	    	   	             	  setTimeout(function(){ window.location.reload(); }, 1500);
+     	    	   	             	 $("#soushuo").val(spNo);
+ 	    	   	             		}else{
+ 	    	   	             		 $("#textInfo").css('display','inline-block');
+     	    	   	             	 $("#textInfo").text("没有此单号的相关数据");
+     	    	   	                 $("#textInfo").css({"font-color":"#FF6A6A"}); 
+ 	    	   	             		}
+ 	    	   	             		
+ 	    	   	             	},
+ 	    	   	             	error:function(er){
+ 	    	   	             		console.log(er);
+ 	    	   	             	 $("#textInfo").css('display','inline-block');
+ 	    	   	             	 $("#textInfo").val("查询失败:请联系mis");
+ 	    	   	                 $("#textInfo").css({"font-color":"#FF6A6A"}); 
+ 	    	   	             	}
+ 	    	   	             })//ajax 
+ 	    	         }else{
+ 	    	        	 $("#textInfo").css('display','inline-block');
+ 	    	    		 $("#textInfo").text("请输入数字和字母！禁止输入中文")
+ 	    	         }
+ 	    	 }else{
+ 	    		 $("#textInfo").css('display','inline-block');
+ 	    		 $("#textInfo").text("请输入5位以上数字的款号")
+ 	    		
+ 	    	 }
+ 	       
+ 	    	
+ 		  });
+            
+    	 
+    	 
+    	 
+            
+    	 //添加新的条码规格
+           $("#submit").click(function(){
+        	 var erpsp2=$("#erpsp2").serialize();
+        	 //alert(erpsp2);
+        	 if(erpsp2==null){
+        		 $("#textInfo").css('display','inline-block');
+ 	    		 $("#textInfo").text("添加规格失败，请至少设置一种规格")
+        	 }else{
+            	 $.ajax({
+  	             	url:"http://192.168.123.198:8082/insert",
+  	             	data:erpsp2,
+  	             	dataType:"text",
+  	             	success:function(data){ 
+  	             		if(data=="no"){
+  	             			
+  	             			
+  	             			
+  	             			
+  	             		     $("#textInfo2").css('display','inline-block');
+	 	   	             	 $("#textInfo2").text("此款为童带，需要提供订单号")
+	 	   	             	 setTimeout(function(){ window.location.reload(); }, 1500);
+	 	   	             //	  var word = prompt("请输此款童带的订单号","")
+	 	   	             //	  if(word!=null&&word!=""){
+	 	   	             		  
+	 	   	             //	     $.ajax({
+  	             	     //           url:"http://192.168.123.198:8082/updatePo",
+  	             	     //           data:{"word":word},
+  	             	     //           dataType:"text",
+  	             	     //           success:function(data){ 
+  	             	      //          		 $("#textInfo2").css('display','inline-block');
+  	            	 	  // 	             	 $("#textInfo2").text(data);
+  	            	 	  // 	                setTimeout(function(){ window.location.reload(); }, 1500);
+  	             	      //                },
+  	         	          //   		error:function(er){
+  	         	          //   	  			  console.log(er);
+  	         	           //  	  		     $("#textInfo").css('display','inline-block');
+  	         	           //  	   			 $("#textInfo").text("操作失败:请联系mis");
+  	         	           //                 $("#textInfo").css({"font-color":"#FF6A6A"}); 
+  	         	          //   	          }
+  	         	          //   })//ajax 
+  	             	     // }//判断不为空
+	 	   	             	 
+	 	   	             	 
+  	             		}else{
+  	             			console.log(data);
+  	  	             		 $("#textInfo2").css('display','inline-block');
+  	 	   	             	 $("#textInfo2").text(data)
+  	 	   	             
+  	 	   	                setTimeout(function(){ window.location.reload(); }, 1500);
+  	             		}
+  	             		
+  	             	},
+  	             	error:function(er){
+  	             		console.log(er);
+  	             	    $("#textInfo").css('display','inline-block');
+  	             	    $("#textInfo").text("操作失败:请联系mis");
+  	                    $("#textInfo").css({"font-color":"#FF6A6A"}); 
+  	             	}
+  	             })//ajax 
+        	 }
+       
+           })
+           
+            $(".go").hover(function(){
+			//当鼠标悬浮时
+			$(this).css("background","#1cc09f");
+			 //当鼠标离开时
+			 },function(){
+				 $(".go").css("background","#f2dede");
+			});
+           
+           
+           //悬浮事件
+	     $("#uptext").hover(function(){
+			//当鼠标悬浮时
+			$(this).css("background","#1cc09f");
+			 //当鼠标离开时
+			 },function(){
+				 $("#uptext").css("background","#f2dede");
+			});
+		
+		
+		
+	     $(".go1").hover(function(){
+				//当鼠标悬浮时
+				$(this).css("background","#1cc09f");
+				 //当鼠标离开时
+				 },function(){
+					 $(".go1").css("background","#f2dede");
+				});
+		
+		
+		//修改生产地址
+		$(".go").click(function(){
+			//获取id
+			var i=$(this)
+			var Str=$(this).children("div").html();
+			var No=$("#erpspNo").text();
+			console.log("进入修改生产地址!"+"Str:"+Str+"----No:"+No);
+			 $.ajax({
+ 	             	url:"http://192.168.123.198:8082/updateMfrs",
+ 	             	data:{"Str":Str,"No":No},
+ 	             	dataType:"text",
+ 	             	success:function(data){
+ 	             		if(data=="error"){
+ 	             			console.log("..缺少数据");
+ 	             			 $("#textInfo").css('display','inline-block');
+ 	 	 	             	 $("#textInfo").text("缺少bom名称或者产地记录，修改失败!");
+ 	 	 	                 $("#textInfo").css({"font-color":"#FF6A6A"});
+ 	             		}else{
+ 	             			console.log("ok！--"+data);
+ 	             			 $("#textInfo").css('display','inline-block');
+ 	 	 	             	 $("#textInfo").text("修改生产地址成功!");
+ 	 	 	                 $("#textInfo").css({"font-color":"#FF6A6A"});
+ 	 	             		 i.children(":first").text(data);
+ 	             		}        		
+ 	             	},
+ 	             	error:function(er){
+ 	             		console.log(er);
+ 	             	 $("#textInfo").css('display','inline-block');
+ 	             	 $("#textInfo").text("修改生产地址失败:请联系mis");
+ 	                 $("#textInfo").css({"font-color":"#FF6A6A"}); 
+ 	             	}
+ 	             })//ajax 
+			
+		})
+		
+		
+		//修改
+		$("#upDate").click(function(){
+			 var No=$("#erpspNo").text();
+			 var date=$("#sellDate").val();
+			 var text=$("#uptext").text();
+			 if(date==null&&text!=null){
+				 $.ajax({
+	                  url:"http://192.168.123.198:8082/changeToNull",
+	                  data:{"No":No},
+	                  type:"post",
+	                  dataType:"text",
+	                  success: function (data) { 
+	                	  window.location.reload();
+	                  },
+	                  error: function (er) {          //失败，回调函数
+	                	  $("#textInfo").text("SQL执行失败"+er);	
+	                     }
+	                  })       //ajax 
+			 }
+		})
+		
+		
+		
+		
+	   //修改出货时间
+	   $("#sellDate").change(function(){
+		  
+		   var No=$("#erpspNo").text();
+		   var date=$("#sellDate").val();
+		   if(date==""){
+			   $("#textInfo").text("童带必须填写出货时间");
+		   }else{
+			   $.ajax({
+	                  url:"http://192.168.123.198:8082/updateSellDate",
+	                  data:{"date":date,"No":No},
+	                  type:"post",
+	                  dataType:"text",
+	                  success: function (data) { 
+	                	  $("#textInfo").text("系统已存入出货时间");	
+	                	  window.location.reload();
+	                  },
+	                  error: function (er) {          //失败，回调函数
+	                	  $("#textInfo").text("SQL执行失败"+er);	
+	                     }
+	                  })       //ajax 
+		   }
+	   })
+		
+		
+		//修改po号
+		$(".go1").click(function(){
+			  var j=$(this);
+			  var No=$("#erpspNo").text();
+			  var inputElement = document.createElement("input");
+		 	  inputElement.value = this.innerHTML;
+	       	  this.parentNode.replaceChild(inputElement, this);
+		      // 当inputElement失去焦点时触发下面函数，使得input变成div 
+		       inputElement.onblur = function() {
+			   this.innerHTML = inputElement.value;
+			        var  linkQuee=inputElement.value;
+			        inputElement.parentNode.replaceChild(this, inputElement);
+			        var bool=/[\u4E00-\u9FA5]/g.test(linkQuee);
+			        //正则判断
+			            if(!bool){
+	    	                 //发送请求 改变po的值         
+				            console.log(linkQuee+"--"+No)
+	    	                      $.ajax({
+		             	              url:"http://192.168.123.198:8082/updatePo2",
+		             	              data:{"linkQuee":linkQuee,"No":No},
+		             	              dataType:"text",
+		             	              success:function(data){
+		             	            	 $("#textInfo").css('display','inline-block');
+		             	                   $("#textInfo").text("修改成功!");
+		                                   $("#textInfo").css({"font-color":"#FF6A6A"}); 
+		                                   location.reload();
+		             	                 },
+		             	               error:function(er){
+		             		              console.log(er);
+		             	                   $("#textInfo").css('display','inline-block');
+		             	                   $("#textInfo").text("修改失败:请联系mis");
+		                                   $("#textInfo").css({"font-color":"#FF6A6A"}); 
+		             	                 }
+		                       })//ajax 
+			        	    
+			             }else{
+			        	    alert("您输入的Po号不能包含汉字！")
+			            }
+			       
+			      
+		      }//失去jiao
+			
+			
+		})
+    
+           
+           
+    
+ })
+       </script>
+
+</body>
+          
+</html>
