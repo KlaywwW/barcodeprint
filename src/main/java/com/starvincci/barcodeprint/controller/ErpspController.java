@@ -403,8 +403,6 @@ public class ErpspController {
 	
 	/**
 	 * 打印预览首页  添加款号规格
-	 * 
-	 * 
 	 * @param erpsp2
 	 * @param session
 	 * @return

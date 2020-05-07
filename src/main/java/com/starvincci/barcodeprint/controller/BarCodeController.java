@@ -89,7 +89,6 @@ public class BarCodeController {
 	
 	/**
 	 * 用户点击打印预览，使用命令行打开模板
-	 * 
 	 * @param url  需要打开的模板路径
 	 * @param id   bom id
 	 * @return
@@ -129,6 +128,10 @@ public class BarCodeController {
 	//自动更新
 	 @RequestMapping("/autoupdate")
 	 @ResponseBody
+
+
+
+
 	 public String AutoUpdate() {
 		 //查询mysql数据库
 		 List<Erpsp2> list=barCodeService.selectAllErpsp2();
