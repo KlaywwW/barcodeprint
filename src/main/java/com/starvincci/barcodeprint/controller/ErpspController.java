@@ -107,7 +107,7 @@ public class ErpspController {
 	 * 1判断mysql数据库是否存在此数据(是否已经导入过规格)
 	 * 
 	 * 2若是皮带款 判断是否存在此LOGO
-	 * 
+	 *
 	 * 3写入数据
 	 * 处理数据: 皮带(价格标,胶片),童带,钱夹
 	 * 
@@ -131,7 +131,6 @@ public class ErpspController {
 			erpsp.setSp_id(id);		
 			erpSp=espSpService.selectAllErpsp(erpsp);
 			if(erpSp!=null) {
-	
 			if(erpSp.getErpspPlusmyField09()!=null&&erpSp.getErpspPlusmyField09()!="") {
 				 if(erpSp.getErpspPlusmyField09().contains("带")||erpSp.getErpspPlusmyField09().contains("帶")) {
 		    		  if(erpSp.getErpspPlusmyField11()!=null&&erpSp.getErpspPlusmyField11()!="") {
@@ -209,6 +208,7 @@ public class ErpspController {
 						//是否是皮带
 						if(isPidai==true) {
 							BarCode br=barCodeService.selectBarcodePhoto(erpSp.getErpspPlusmyField05());
+							System.out.println("erpSp.getErpspPlusmyField12()---------------------"+erpSp.getErpspPlusmyField12());
 						    //是否有LOGO	
 							if(br!=null) {
 								    
@@ -222,13 +222,16 @@ public class ErpspController {
 									session.removeAttribute("misssinfo");
 									session.setAttribute("img", ImgUrl);
 								//客户编码是否有尺寸
+
 								if(erpSp.getErpspPlusmyField12().contains("-")) {
+
+
 									String str1=erpSp.getErpspPlusmyField12().substring(0, erpSp.getErpspPlusmyField12().indexOf("-"));
 								    String str2=erpSp.getErpspPlusmyField12().substring(str1.length()+1, erpSp.getErpspPlusmyField12().length());
 								    String str3="SIZE"+"\t"+str2;
 								    System.out.println(str1+"==="+str3);
 								    IOUtils.WriteLink(str1,kehu2);
-								    IOUtils.WriteLink(str3,size);    
+								    IOUtils.WriteLink(str3,size);
 								}else {
 									IOUtils.WriteLink(erpSp.getErpspPlusmyField12(),kehu2);
 								    IOUtils.WriteLink("SIZE",size);  
