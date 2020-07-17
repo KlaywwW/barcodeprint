@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
-@ComponentScan(basePackages={"com.starvincci.barcodeprint.Config","com.starvincci.barcodeprint.read","com.starvincci.barcodeprint.write","com.starvincci.barcodeprint.controller"})
-public class BarcodeprintApplication extends SpringBootServletInitializer{
+@ComponentScan(basePackages = {"com.starvincci.barcodeprint.Config", "com.starvincci.barcodeprint.read", "com.starvincci.barcodeprint.write", "com.starvincci.barcodeprint.controller"})
+public class BarcodeprintApplication extends SpringBootServletInitializer {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BarcodeprintApplication.class, args);
-	}
-	
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(this.getClass());
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BarcodeprintApplication.class, args);
+    }
+
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(this.getClass());
+    }
 
 }
