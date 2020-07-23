@@ -88,7 +88,6 @@ public class BarCodeController {
     @RequestMapping("/autoupdate")
     @ResponseBody
 
-
     public String AutoUpdate() {
         //查询mysql数据库
         List<Erpsp2> list = barCodeService.selectAllErpsp2();

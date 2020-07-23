@@ -4,6 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.starvincci.barcodeprint.write.mapper.SizeMapper">
     <select id="findAllSize" resultType="com.starvincci.barcodeprint.pojo.Size">
-        select * from size;
+        select * from size ORDER BY sizename;
     </select>
 </mapper>
