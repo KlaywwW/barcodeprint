@@ -16,7 +16,7 @@ import com.starvincci.barcodeprint.pojo.MpsPlan;
  * @author admin
  */
 @Mapper
-public interface erpMapper {
+public interface ErpMapper {
 
     @Select("<script>"
             + "select Sp_No, Sp_Spec, Sp_Name,erpspPlusmyField03,erpspPlusmyField12,erpspPlusmyField05,erpspPlusmyField06,erpspPlusmyField09,erpspPlusmyField11,erpsp.Sp_id from erpsp,erpspPlus"

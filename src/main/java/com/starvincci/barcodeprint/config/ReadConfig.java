@@ -1,4 +1,4 @@
-package com.starvincci.barcodeprint.Config;
+package com.starvincci.barcodeprint.config;
 
 import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;

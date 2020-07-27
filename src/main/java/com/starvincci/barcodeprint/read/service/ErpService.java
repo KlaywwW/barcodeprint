@@ -1,25 +1,19 @@
 package com.starvincci.barcodeprint.read.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.starvincci.barcodeprint.pojo.BarCodeGuiGe;
 import com.starvincci.barcodeprint.pojo.Erpsp;
-import com.starvincci.barcodeprint.read.mapper.erpMapper;
+import com.starvincci.barcodeprint.read.mapper.ErpMapper;
 
 @Service
-public class erpService {
+public class ErpService {
 
 
     @Autowired
-    private erpMapper erpmapper;
+    private ErpMapper erpmapper;
 
     public Erpsp selectAllErpsp(Erpsp erpsp) {
         return erpmapper.selectAllErpsp(erpsp);

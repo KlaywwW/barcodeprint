@@ -72,10 +72,10 @@
         <div class="sidebar-collapse">
             <ul class="nav" id="main-menu">
                 <li>
-                    <a class="active-menu" href="http://192.168.123.198:8082/index"><i class="fa fa-bar-chart-o"></i>贴纸打印</a>
+                    <a class="active-menu" th:href="@{/index}"><i class="fa fa-bar-chart-o"></i>贴纸打印</a>
                 </li>
                 <li>
-                    <a class="active-menu" href="http://192.168.123.198:8082/updateInfo"><i
+                    <a class="active-menu" th:href="@{/updateInfo}"><i
                             class="fa fa-bar-chart-o"></i>修改规格</a>
                 </li>
             </ul>
@@ -92,7 +92,7 @@
                         <small>条码标签打印系统</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="http://192.168.123.198:8082/updateInfo">贴纸打印</a></li>
+                        <li><a th:href="@{/updateInfo}">贴纸打印</a></li>
                     </ol>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                                                      th:each="erpSp,Stater:${session.ERPlist}">
                                                     <div class="xianshi">
                                                         <input hidden="hidden" th:value="${erpSp.sp_id}"/>
-                                                        <a th:href="@{http://192.168.123.198:8082/erpSp(id=${erpSp.sp_id})}"
+                                                        <a th:href="@{/erpSp(id=${erpSp.sp_id})}"
                                                            th:text="${erpSp.sp_No}+'---'+${erpSp.sp_Name}"></a>
                                                     </div>
                                                 </div>
@@ -289,7 +289,7 @@
                                         <th th:switch="${session.erpsp2.price!='\'}">
                                             <div th:case="true">
                                                 <div>
-                                                    <a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.price})}"
+                                                    <a th:href="@{/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.price})}"
                                                        class="btn btn-primary">打印预览</a></div>
                                             </div>
                                             <div th:case="false"></div>
@@ -298,7 +298,7 @@
                                         <th th:switch="${session.erpsp2.jiaopian!='\'}">
                                             <div th:case="true">
                                                 <div>
-                                                    <a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.jiaopian})}"
+                                                    <a th:href="@{/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.jiaopian})}"
                                                        class="btn btn-primary">打印预览</a></div>
                                             </div>
                                             <div th:case="false"></div>
@@ -307,7 +307,7 @@
                                         <th th:switch="${session.erpsp2.xiaosipian!='\'}">
                                             <div th:case="true">
                                                 <div>
-                                                    <a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.xiaosipian})}"
+                                                    <a th:href="@{/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.xiaosipian})}"
                                                        class="btn btn-primary">打印预览</a></div>
                                             </div>
                                             <div th:case="false"></div>
@@ -316,7 +316,7 @@
                                         <th th:switch="${session.erpsp2.neihe!='\'}">
                                             <div th:case="true">
                                                 <div>
-                                                    <a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.neihe})}"
+                                                    <a th:href="@{/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.neihe})}"
                                                        class="btn btn-primary">打印预览</a></div>
                                             </div>
                                             <div th:case="false"></div>
@@ -325,7 +325,7 @@
                                         <th th:switch="${session.erpsp2.maodai!='\'}">
                                             <div th:case="true">
                                                 <div>
-                                                    <a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.maodai})}"
+                                                    <a th:href="@{/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.maodai})}"
                                                        class="btn btn-primary">打印预览</a></div>
                                             </div>
                                             <div th:case="false"></div>
@@ -334,7 +334,7 @@
                                         <th th:switch="${session.erpsp2.guapai!='\'}">
                                             <div th:case="true">
                                                 <div>
-                                                    <a th:href="@{http://192.168.123.198:8082/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.guapai})}"
+                                                    <a th:href="@{/point(id=${session.erpSps.Sp_id},url=${session.erpsp2.guapai})}"
                                                        class="btn btn-primary">打印预览</a></div>
                                             </div>
                                             <div th:case="false"></div>
@@ -550,7 +550,7 @@
 
 <script>
     $(function () {
-
+        var path="http://192.168.123.198:8082";
 
         $("#sideNav").addClass('closed');
         $('.navbar-side').animate({left: '-260px'});
@@ -566,7 +566,7 @@
                 if (!bool) {
 
                     $.ajax({
-                        url: "http://192.168.123.198:8082/findErpSPInfo",
+                        url: path+"/findErpSPInfo",
                         data: {"spNo": spNo},
                         dataType: "text",
                         success: function (data) {
@@ -614,7 +614,7 @@
                 $("#textInfo").text("添加规格失败，请至少设置一种规格")
             } else {
                 $.ajax({
-                    url: "http://192.168.123.198:8082/insert",
+                    url: path+"/insert",
                     data: erpsp2,
                     dataType: "text",
                     success: function (data) {
@@ -630,7 +630,7 @@
                             //	  if(word!=null&&word!=""){
 
                             //	     $.ajax({
-                            //           url:"http://192.168.123.198:8082/updatePo",
+                            //           url:path+"/updatePo",
                             //           data:{"word":word},
                             //           dataType:"text",
                             //           success:function(data){
@@ -706,7 +706,7 @@
             var No = $("#erpspNo").text();
             console.log("进入修改生产地址!" + "Str:" + Str + "----No:" + No);
             $.ajax({
-                url: "http://192.168.123.198:8082/updateMfrs",
+                url: path+"/updateMfrs",
                 data: {"Str": Str, "No": No},
                 dataType: "text",
                 success: function (data) {
@@ -741,7 +741,7 @@
             var text = $("#uptext").text();
             if (date == null && text != null) {
                 $.ajax({
-                    url: "http://192.168.123.198:8082/changeToNull",
+                    url: path+"/changeToNull",
                     data: {"No": No},
                     type: "post",
                     dataType: "text",
@@ -765,7 +765,7 @@
                 $("#textInfo").text("童带必须填写出货时间");
             } else {
                 $.ajax({
-                    url: "http://192.168.123.198:8082/updateSellDate",
+                    url: path+"/updateSellDate",
                     data: {"date": date, "No": No},
                     type: "post",
                     dataType: "text",
@@ -799,7 +799,7 @@
                     //发送请求 改变po的值
                     console.log(linkQuee + "--" + No)
                     $.ajax({
-                        url: "http://192.168.123.198:8082/updatePo2",
+                        url: path+"/updatePo2",
                         data: {"linkQuee": linkQuee, "No": No},
                         dataType: "text",
                         success: function (data) {

@@ -1,36 +1,19 @@
 package com.starvincci.barcodeprint.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.krysalis.barcode4j.tools.IOUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.starvincci.barcodeprint.pojo.BarCode;
 import com.starvincci.barcodeprint.pojo.Erpsp;
 import com.starvincci.barcodeprint.pojo.Erpsp2;
-import com.starvincci.barcodeprint.pojo.Text;
-import com.starvincci.barcodeprint.read.mapper.ReadMapper;
-import com.starvincci.barcodeprint.read.service.erpService;
-import com.starvincci.barcodeprint.util.BarcodeUtil;
-import com.starvincci.barcodeprint.util.IOUtils;
-import com.starvincci.barcodeprint.util.ImageHandleHelper;
-import com.starvincci.barcodeprint.util.SwitchLanguageUtils;
-import com.starvincci.barcodeprint.util.TextUtils;
+import com.starvincci.barcodeprint.read.service.ErpService;
 import com.starvincci.barcodeprint.write.service.BarCodeService;
 
 
@@ -38,7 +21,7 @@ import com.starvincci.barcodeprint.write.service.BarCodeService;
 public class BarCodeController {
 
     @Autowired
-    private erpService eservice;
+    private ErpService eservice;
     @Autowired
     private BarCodeService barCodeService;
 

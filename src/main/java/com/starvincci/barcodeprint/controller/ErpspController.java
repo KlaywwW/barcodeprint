@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.starvincci.barcodeprint.pojo.BarCode;
 import com.starvincci.barcodeprint.pojo.Erpsp;
 import com.starvincci.barcodeprint.pojo.Erpsp2;
-import com.starvincci.barcodeprint.read.service.erpService;
+import com.starvincci.barcodeprint.read.service.ErpService;
 import com.starvincci.barcodeprint.util.IOUtils;
 import com.starvincci.barcodeprint.util.IPUtils;
 import com.starvincci.barcodeprint.write.service.BarCodeService;
@@ -35,7 +35,7 @@ public class ErpspController {
     private static final Logger log = LoggerFactory.getLogger(ErpspController.class);
 
     @Autowired
-    private erpService espSpService;
+    private ErpService espSpService;
 
     @Autowired
     private BarCodeService barCodeService;
