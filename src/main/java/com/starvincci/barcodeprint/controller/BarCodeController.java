@@ -25,7 +25,7 @@ public class BarCodeController {
     @Autowired
     private BarCodeService barCodeService;
 
-    private String path="http://192.168.123.198:8082";
+    private String path="http://192.168.123.192:8082";
 
 
     /**
@@ -60,7 +60,7 @@ public class BarCodeController {
             }
 
             session.setAttribute("mes", "改变出货时间 po 地址 需要 重新点击打印预览");
-            //http://192.168.123.198:8082/erpSp?id=82257
+            //http://192.168.123.192:8082/erpSp?id=82257
             String url2 = "redirect:"+path+"/erpSp?id=" + id;
             return url2;
 
