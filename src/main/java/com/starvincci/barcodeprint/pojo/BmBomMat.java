@@ -2,34 +2,39 @@ package com.starvincci.barcodeprint.pojo;
 
 /**
  * 
- * sqlserver数据库 暂不使用此表
+ * sqlserver数据库
  * bom子件信息 关系表
+ * 只写了需要的字段
  * @author admin
  *
  */
 public class BmBomMat {
 	
-	private Integer BmBomMat_id;//主键id
-	private Integer Bom_Id;//bom父件关系表id
-	private Integer Mat_ID;//bomID
-	
-	public Integer getMat_ID() {
-		return Mat_ID;
-	}
-	public void setMat_ID(Integer mat_ID) {
-		Mat_ID = mat_ID;
-	}
-	public Integer getBom_Id() {
-		return Bom_Id;
-	}
-	public void setBom_Id(Integer bom_Id) {
-		Bom_Id = bom_Id;
-	}
-	public Integer getBmBomMat_id() {
-		return BmBomMat_id;
-	}
-	public void setBmBomMat_id(Integer bmBomMat_id) {
-		BmBomMat_id = bmBomMat_id;
+	private Integer bomMatId;//主键id
+	private Integer bomId;//bom父件关系表id
+	private Integer matID;//对应着erpsp中的sp_id
+
+	public Integer getBomMatId() {
+		return bomMatId;
 	}
 
+	public void setBomMatId(Integer bomMatId) {
+		this.bomMatId = bomMatId;
+	}
+
+	public Integer getBomId() {
+		return bomId;
+	}
+
+	public void setBomId(Integer bomId) {
+		this.bomId = bomId;
+	}
+
+	public Integer getMatID() {
+		return matID;
+	}
+
+	public void setMatID(Integer matID) {
+		this.matID = matID;
+	}
 }

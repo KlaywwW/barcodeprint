@@ -72,7 +72,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand" href="index.html"><i class="fa fa-comments"></i> <strong>贴纸打印 </strong></span>
+            <span class="navbar-brand" href="index.html"><i class="fa fa-comments"></i> <strong>贴纸打印</strong></span>
         </div>
 
     </nav>
@@ -120,33 +120,47 @@
 
                         </div>
                         <div class="panel-body">
-                            <div class="father">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <input class="form-control input-lg" id="soushuo" placeholder="输入款号搜索数据"
-                                               type="text"/>
+                            <div class="row">
+                                <div class="father col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <input class="form-control input-lg" id="soushuo" placeholder="输入款号搜索数据"
+                                                   type="text"/>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label style="display: none;color: red;font-size:30px"
+                                                   id="textInfo"></label>
+                                        </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <label style="display: none;color: red;font-size:30px" id="textInfo"></label>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div th:if="${session.ERPlist2!=null}"
-                                             th:each="erpSp2,Stater:${session.ERPlist2}">
-                                            <div class="xianshi">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div th:if="${session.ERPlist2!=null}"
+                                                 th:each="erpSp2,Stater:${session.ERPlist2}">
+                                                <div class="xianshi">
 
-                                                <a th:href="@{/updateInfo(id=${erpSp2.id})}"
-                                                   th:text="${erpSp2.no}"></a>
+                                                    <a th:href="@{/updateInfo(id=${erpSp2.id})}"
+                                                       th:text="${erpSp2.no}"></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- 上传Excel分析-->
+                                <div class="col-md-4">
+                                        <div>
+                                            <form action="/excelUpload" method="post" enctype="multipart/form-data">
+                                                <input type="file" name="file">
+                                                <input type="submit" value="提交">
+                                            </form>
+                                        </div>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
+
             </div>
 
 
@@ -217,7 +231,7 @@
 <script>
     $(function () {
 
-        var path="http://192.168.123.192:8082";
+        var path = "http://192.168.123.51:8082";
 
 
         //打开页面关闭侧面导航栏
@@ -252,7 +266,7 @@
             var No = $(this).parent().children("th").text();
             console.log("进入修改生产地址!" + "Str:" + Str + "----No:" + No);
             $.ajax({
-                url: path+"/updateMfrs",
+                url: path + "/updateMfrs",
                 data: {"Str": Str, "No": No},
                 dataType: "text",
                 success: function (data) {
@@ -300,7 +314,7 @@
                 if (!bool) {
 
                     $.ajax({
-                        url: path+"/findErpSPInfo2",
+                        url: path + "/findErpSPInfo2",
                         data: {"spNo": spNo},
                         dataType: "text",
                         success: function (data) {
@@ -364,7 +378,7 @@
 
                     console.log(linkQuee + "--" + No)
                     $.ajax({
-                        url: path+"/updatePo2",
+                        url: path + "/updatePo2",
                         data: {"linkQuee": linkQuee, "No": No},
                         dataType: "text",
                         success: function (data) {
@@ -401,7 +415,7 @@
                 $("#textInfo").text("添加规格失败，请至少设置一种规格")
             } else {
                 $.ajax({
-                    url: path+"/insert",
+                    url: path + "/insert",
                     data: erpsp2,
                     dataType: "text",
                     success: function (data) {

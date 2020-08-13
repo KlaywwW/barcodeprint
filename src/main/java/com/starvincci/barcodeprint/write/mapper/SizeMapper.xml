@@ -6,4 +6,8 @@
     <select id="findAllSize" resultType="com.starvincci.barcodeprint.pojo.Size">
         select * from size ORDER BY sizename;
     </select>
+
+    <select id="findTagsBySpNo" resultType="com.starvincci.barcodeprint.pojo.Erpsp2">
+        SELECT id,`no` FROM erpsp2 WHERE `no`=#{spNo}
+    </select>
 </mapper>

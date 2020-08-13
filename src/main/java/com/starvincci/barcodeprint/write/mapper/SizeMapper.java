@@ -1,8 +1,8 @@
 package com.starvincci.barcodeprint.write.mapper;
 
+import com.starvincci.barcodeprint.pojo.Erpsp2;
 import com.starvincci.barcodeprint.pojo.Size;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -14,4 +14,9 @@ public interface SizeMapper {
      * @return
      */
     List<Size> findAllSize();
+
+    /**
+     * 查询某款号贴纸是否存在
+     */
+    List<Erpsp2> findTagsBySpNo(String spNo);
 }

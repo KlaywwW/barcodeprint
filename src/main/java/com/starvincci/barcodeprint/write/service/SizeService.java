@@ -1,5 +1,6 @@
 package com.starvincci.barcodeprint.write.service;
 
+import com.starvincci.barcodeprint.pojo.Erpsp2;
 import com.starvincci.barcodeprint.pojo.Size;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface SizeService {
      * @return
      */
     List<Size> findAllSize();
+
+    List<Erpsp2> findTagsBySpNo(String spNo);
 }

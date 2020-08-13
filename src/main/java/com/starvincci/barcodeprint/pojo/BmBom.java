@@ -2,30 +2,39 @@ package com.starvincci.barcodeprint.pojo;
 
 /**
  * 
- * sqlserver数据库 暂不使用此表
+ * sqlserver数据库
+ *
  * BOM表父级
  * @author admin
  *
  */
 public class BmBom {
 
-	private Integer Bom_Id;//主键id
-	
-	private Integer SP_ID;//bom表id(外键)
+	private Integer bomId;//主键id
+	private Integer spId;//bom表id(外键)
+	private String bomRev;//版本  有01和TW两个版本 我们在数据库中查询用01即可，因为只是为了要查到存货编码
 
-	public Integer getSP_ID() {
-		return SP_ID;
+	public Integer getBomId() {
+		return bomId;
 	}
 
-	public void setSP_ID(Integer sP_ID) {
-		SP_ID = sP_ID;
+	public void setBomId(Integer bomId) {
+		this.bomId = bomId;
 	}
 
-	public Integer getBom_Id() {
-		return Bom_Id;
+	public Integer getSpId() {
+		return spId;
 	}
 
-	public void setBom_Id(Integer bom_Id) {
-		Bom_Id = bom_Id;
+	public void setSpId(Integer spId) {
+		this.spId = spId;
+	}
+
+	public String getBomRev() {
+		return bomRev;
+	}
+
+	public void setBomRev(String bomRev) {
+		this.bomRev = bomRev;
 	}
 }

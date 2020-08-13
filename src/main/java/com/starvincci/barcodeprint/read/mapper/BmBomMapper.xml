@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.starvincci.barcodeprint.read.mapper.BmBomMapper">
+
+
+    <select id="findBmBySpNo" resultMap="bom">
+        Select SP_ID,Bom_id from bmBom where Bom_id in (select Bom_Id from bmBomMat where Mat_ID=(select Sp_id from  erpsp where Sp_No=#{spNo})) and BomRev='01'
+    </select>
+
+
+    <select id="findSpNo" resultType="com.starvincci.barcodeprint.pojo.Erpsp">
+        select Sp_No,Sp_id,Sp_Name from erpsp where SP_ID=#{spId}
+    </select>
+
+    <resultMap id="bom" type="com.starvincci.barcodeprint.pojo.BmBom">
+        <result column="SP_ID" property="spId"></result>
+        <result column="Bom_id" property="bomId"></result>
+    </resultMap>
+
+</mapper>
