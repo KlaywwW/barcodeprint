@@ -431,6 +431,7 @@ public class ErpspController {
             Timestamp time = new Timestamp(new Date().getTime());
             Integer id = erpsp.getSp_id();
             String No = erpsp.getSp_No();
+            System.out.println(No);
             String brand = erpsp.getErpspPlusmyField05();
             if (id == null || No == null || brand == null) {
                 return "数据失效，请刷新页面";
