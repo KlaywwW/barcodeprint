@@ -203,7 +203,8 @@ public class ErpspController {
                 } else {
 
                     log.info("查询mysql数据库....已找到款号");
-                    Boolean isPidai = erpSp.getErpspPlusmyField09().contains("带") == true || erpSp.getErpspPlusmyField09().contains("帶") == true;
+                    Boolean isPidai = erpSp.getErpspPlusmyField09().contains("带") == true || erpSp.getErpspPlusmyField09().contains("帶") == true
+                            || erpSp.getErpspPlusmyField09().contains("槍套")==true || erpSp.getErpspPlusmyField09().contains("枪套");
                     String orlImgUrl = "";
 
                     try {
@@ -215,10 +216,12 @@ public class ErpspController {
                         String price = "D:\\wip\\price.txt";
                         String kehu2 = "D:\\wip\\kehu2.txt";
                         String size = "D:\\wip\\size.txt";
-
+                        System.err.println(isPidai);
                         //是否是皮带
                         if (isPidai == true) {
                             BarCode br = barCodeService.selectBarcodePhoto(erpSp.getErpspPlusmyField05());
+                            System.err.println(erpSp.getErpspPlusmyField05());
+                            System.err.println(br.getImgUrl());
                             System.out.println("erpSp.getErpspPlusmyField12()---------------------" + erpSp.getErpspPlusmyField12());
                             //是否有LOGO
                             if (br != null) {
