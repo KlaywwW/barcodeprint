@@ -128,8 +128,7 @@
                                                    type="text"/>
                                         </div>
                                         <div class="col-md-2">
-                                            <label style="display: none;color: red;font-size:30px"
-                                                   id="textInfo"></label>
+                                            <label style="display: none;color: red;font-size:30px" id="textInfo"></label>
                                         </div>
                                     </div>
 
@@ -231,7 +230,7 @@
 <script>
     $(function () {
 
-        var path = "http://192.168.123.86:8082";
+        var path = "http://localhost:8082";
 
 
         //打开页面关闭侧面导航栏
@@ -324,6 +323,7 @@
                                 setTimeout(function () {
                                     window.location.reload();
                                 }, 1500);
+                                console.log("查询成功");
                                 $("#soushuo").val(spNo);
 
                             } else {

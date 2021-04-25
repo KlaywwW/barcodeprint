@@ -24,6 +24,7 @@ public class Erpsp implements Serializable {
 	private String erpspPlusmyField05;//品牌名称
 	private String erpspPlusmyField06;//价格
 	private String erpspPlusmyField09;//款式类别
+	private String erpspPlusmyField10;//备注--英文字母
 	private String erpspPlusmyField11;//使用对象
 	private String style;//使用的价格贴纸规格  1数据库无贴纸规格 2皮带通用 3童带 4为皮夹
 	private String photoStyle;//胶片贴标规格
@@ -34,7 +35,35 @@ public class Erpsp implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Erpsp{" +
+				"Sp_No='" + Sp_No + '\'' +
+				", Sp_Name='" + Sp_Name + '\'' +
+				", Sp_id=" + Sp_id +
+				", erpspPlusmyField03='" + erpspPlusmyField03 + '\'' +
+				", erpspPlusmyField12='" + erpspPlusmyField12 + '\'' +
+				", erpspPlusmyField05='" + erpspPlusmyField05 + '\'' +
+				", erpspPlusmyField06='" + erpspPlusmyField06 + '\'' +
+				", erpspPlusmyField09='" + erpspPlusmyField09 + '\'' +
+				", erpspPlusmyField10='" + erpspPlusmyField10 + '\'' +
+				", erpspPlusmyField11='" + erpspPlusmyField11 + '\'' +
+				", style='" + style + '\'' +
+				", photoStyle='" + photoStyle + '\'' +
+				", Sp_Spec='" + Sp_Spec + '\'' +
+				", kk='" + kk + '\'' +
+				'}';
+	}
+
+	public String getErpspPlusmyField10() {
+		return erpspPlusmyField10;
+	}
+
+	public void setErpspPlusmyField10(String erpspPlusmyField10) {
+		this.erpspPlusmyField10 = erpspPlusmyField10;
+	}
+
 	public String getErpspPlusmyField03() {
 		return erpspPlusmyField03;
 	}

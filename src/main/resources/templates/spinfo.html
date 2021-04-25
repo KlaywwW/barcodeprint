@@ -153,6 +153,7 @@
                                         <th>品牌名称</th>
                                         <th class="nb">upc号码</th>
                                         <th>客户</th>
+                                        <th>备注</th>
                                         <th class="nb">价格</th>
                                         <th>款式类别</th>
 
@@ -165,9 +166,10 @@
                                         <th th:text="${session.erpSps.erpspPlusmyField05}"></th>
                                         <th th:text="${session.erpSps.erpspPlusmyField03}"></th>
                                         <th th:text="${session.erpSps.erpspPlusmyField12}"></th>
+                                        <th th:text="${session.erpSps.erpspPlusmyField10}"></th>
                                         <th th:text="${session.erpSps.erpspPlusmyField06}"></th>
                                         <th th:text="${session.erpSps.kk}"
-                                            style="background-color:yellow;color:red"></th>
+                                        style="background-color:yellow;color:red"></th>
 
                                     </tr>
                                     </tbody>
@@ -550,7 +552,7 @@
 
 <script>
     $(function () {
-        var path = "http://192.168.123.86:8082";
+        var path = "http://localhost:8082";
 
         $("#sideNav").addClass('closed');
         $('.navbar-side').animate({left: '-260px'});

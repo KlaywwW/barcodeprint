@@ -19,7 +19,7 @@ import com.starvincci.barcodeprint.pojo.MpsPlan;
 public interface ErpMapper {
 
     @Select("<script>"
-            + "select Sp_No, Sp_Spec, Sp_Name,erpspPlusmyField03,erpspPlusmyField12,erpspPlusmyField05,erpspPlusmyField06,erpspPlusmyField09,erpspPlusmyField11,erpsp.Sp_id from erpsp,erpspPlus"
+            + "select Sp_No, Sp_Spec, Sp_Name,erpspPlusmyField03,erpspPlusmyField12,erpspPlusmyField05,erpspPlusmyField06,erpspPlusmyField09,erpspPlusmyField10,erpspPlusmyField11,erpsp.Sp_id from erpsp,erpspPlus"
             + "<where>"
             + "erpsp.Sp_id=erpspPlus.SP_ID "
             + "<if test='Sp_id !=null'>"
@@ -44,6 +44,7 @@ public interface ErpMapper {
             @Result(column = "erpspPlusmyField05", property = "erpspPlusmyField05"),
             @Result(column = "erpspPlusmyField06", property = "erpspPlusmyField06"),
             @Result(column = "erpspPlusmyField09", property = "erpspPlusmyField09"),
+            @Result(column = "erpspPlusmyField10", property = "erpspPlusmyField10"),
             @Result(column = "erpspPlusmyField11", property = "erpspPlusmyField11"),
             @Result(column = "Sp_id", property = "Sp_id"),
             @Result(column = "Sp_Spec", property = "Sp_Spec"),

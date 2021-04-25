@@ -25,7 +25,7 @@ public class BarCodeController {
     @Autowired
     private BarCodeService barCodeService;
 
-    private String path="http://192.168.123.86:8082";
+    private String path="http://localhost:8082";
 
 
     /**

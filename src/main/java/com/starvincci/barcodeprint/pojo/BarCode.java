@@ -1,7 +1,6 @@
 package com.starvincci.barcodeprint.pojo;
 
 public class BarCode {//条形码图片和品牌 关系表
-	
 	private Integer id;
 	private String brand;//品牌
 	private String brandType;//品牌类型    皮带钱夹

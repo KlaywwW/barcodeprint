@@ -130,7 +130,8 @@ public class ErpspController {
         model.addAttribute("size",sizeService.findAllSize());
 
         log.info("--打印预览，写入数据中");
-        if (id != null) {            session.removeAttribute("mes");
+            if (id != null) {
+                session.removeAttribute("mes");
             session.removeAttribute("mes2");
             session.removeAttribute("img");
             session.removeAttribute("missinfo");
@@ -140,7 +141,9 @@ public class ErpspController {
             Erpsp erpSp = new Erpsp();
             Erpsp erpsp = new Erpsp();
             erpsp.setSp_id(id);
+
             erpSp = espSpService.selectAllErpsp(erpsp);
+
             if (erpSp != null) {
                 if (erpSp.getErpspPlusmyField09() != null && erpSp.getErpspPlusmyField09() != "") {
                     if (erpSp.getErpspPlusmyField09().contains("带") || erpSp.getErpspPlusmyField09().contains("帶")) {
@@ -216,6 +219,7 @@ public class ErpspController {
                         String price = "D:\\wip\\price.txt";
                         String kehu2 = "D:\\wip\\kehu2.txt";
                         String size = "D:\\wip\\size.txt";
+                        String word="D:\\wip\\word.txt";
                         System.err.println(isPidai);
                         //是否是皮带
                         if (isPidai == true) {
@@ -267,7 +271,7 @@ public class ErpspController {
 
                             List<String> brands = new ArrayList<>();
                             brands.add("ARIAT");
-                            brands.add("Aaiat");
+                            brands.add("Ariat");
                             brands.add("Ariat Brand");
                             brands.add("Ariat Work");
                             if (brands.contains(erpSp.getErpspPlusmyField05()) == true) {
@@ -319,6 +323,11 @@ public class ErpspController {
                         String url2 = "D:\\wip\\info.txt";
                         IOUtils.WriteLink(mes2, url2);
 
+//                        写入英文字母
+                        if  (erpSp.getErpspPlusmyField10()!=null&&!"".equals(erpSp.getErpspPlusmyField10())){
+                            IOUtils.WriteLink(erpSp.getErpspPlusmyField10(),word);
+                        }
+                        
 
                         if (erpsp2.getMade() == 1) {
 
